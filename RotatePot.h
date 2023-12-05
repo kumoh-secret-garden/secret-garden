@@ -1,6 +1,6 @@
 #ifndef ROTATEPOT_H
 #define ROTATEPOT_H
 
-void RotatePot();
+void rotatePot();
 
 #endif

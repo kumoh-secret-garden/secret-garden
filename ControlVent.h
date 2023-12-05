@@ -1,6 +1,6 @@
 #ifndef CONTROLVENT_H
 #define CONTROLVENT_H
 
-void ControlVent();
+void controlVent();
 
 #endif

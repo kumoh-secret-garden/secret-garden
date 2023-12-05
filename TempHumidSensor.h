@@ -1,6 +1,6 @@
 #ifndef TEMPHUMIDSENSOR_H
 #define TEMPHUMIDSENSOR_H
 
-void TempHumidSensor();
+char tempHumidSensor();
 
 #endif
