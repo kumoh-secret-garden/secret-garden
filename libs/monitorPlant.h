@@ -7,7 +7,7 @@
 #include "tempHumidSensor.h"
 
 #define BAUD_RATE 115200 // 블루투스의 보율이 바뀔 경우 이 값을 변경해야 한다.
-#define UART_TX_GPI 0    // 전송(TX)을 위한 핀
+#define UART_TX_GPIO 0   // 전송(TX)을 위한 핀
 #define UART_RX_GPIO 1   // 수신(RX)을 위한 핀
 
 /*
