@@ -47,6 +47,37 @@ time_t getCurrentTime()
 */
 void *scheduler(void *arg)
 {
+    time_t lastMonitorTime = 0;
+    time_t lastRotateTime = 0;
+    time_t lastMusicTime = 0;
+
+    while (1)
+    {
+        sleep(1); // 1초마다 스케줄러 작동
+
+        time_t currentTime = getCurrentTime();
+
+        // 모니터링 기능은 30초마다 실행
+        if (difftime(currentTime, lastMonitorTime) >= 30)
+        {
+            monitor_plant(NULL);
+            lastMonitorTime = currentTime;
+        }
+
+        // 화분 회전 기능은 1분마다 실행
+        if (difftime(currentTime, lastRotateTime) >= 60)
+        {
+            rotate_pot(NULL);
+            lastRotateTime = currentTime;
+        }
+
+        // 음악재생 기능은 3분마다 실행
+        if (difftime(currentTime, lastMusicTime) >= 180)
+        {
+            play_music(NULL);
+            lastMusicTime = currentTime;
+        }
+    }
 }
 
 // BCD를 10진수로 변환하는 함수
