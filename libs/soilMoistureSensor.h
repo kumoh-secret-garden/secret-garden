@@ -10,6 +10,6 @@
 - 모니터링 기능에서 사용됨
 by 정연준
 */
-void *getSoilMoisture(void *arg);
+void *syncSoilMoisture(void *arg);
 
 #endif
