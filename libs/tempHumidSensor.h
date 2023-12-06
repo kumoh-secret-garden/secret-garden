@@ -10,6 +10,6 @@
 - 모니터링 기능에서 사용됨
 by 조우성
 */
-void *syncTempHumidInfo(void *arg);
+void *syncTempHumidInfo(void *arg); // 특정 주기 마다 common.h의 tempHumidInfo 값을 갱신하는 방식으로 바꿔야 함.
 
 #endif
