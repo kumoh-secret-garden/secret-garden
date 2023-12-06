@@ -3,7 +3,10 @@
 
 #include "common.h"
 
-typedef struct {
+#define DHT_DATA_GPIO 17 // 실제로 온습도 센서의 데이터 핀
+
+typedef struct
+{
     float temperature;
     float humidity;
 } ClimateData;

@@ -3,14 +3,14 @@
 
 #include "common.h"
 
-#define SPEAKER_GPIO 18
-#define RAGNE 100
+#define BUZZER_GPIO 26
+#define RANGE 100
 #define DUTY 50
 
 /*
 음악 재생 기능(특정 시간마다 음악을 재생하는 기능)
 by 이지현
 */
-void* play_music(void* arg);
+void *play_music(void *arg);
 
 #endif

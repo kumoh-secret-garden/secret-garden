@@ -6,6 +6,9 @@
 #include "rotatePot.h"
 #include "playMusic.h"
 
+#define I2C_SDA_GPIO 2 // 실제 SDA 핀 번호
+#define I2C_SCL_GPIO 3 // 실제 SCL 핀 번호
+
 #define SLAVE_ADDR_01 0x68 // i2c_fd device ID
 #define SEC_REG 0x00       // seconds register
 #define MIN_REG 0x01       // minutes register
