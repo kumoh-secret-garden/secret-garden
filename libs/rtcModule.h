@@ -23,7 +23,7 @@
 - 모니터링 기능에서 사용됨
 by 정연준
 */
-void *getCurrentTime(void *arg);
+void *syncCurrentTime(void *arg);
 
 /*
 특정 시간마다 다른 센서들을 실행시키는 스케줄러 함수
