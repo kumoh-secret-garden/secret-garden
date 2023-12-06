@@ -3,15 +3,11 @@
 
 #include "common.h"
 
-#include "controlLED.h"
-#include "remoteController.h"
-#include "getSoilMoisture.h"
-#include "controlWaterPump.h"
-#include "controlBluetooth.h"
-#include "schedulerRTC.h"
-#include "tempHumidSensor.h"
+#include "photosynthesis.h"
+#include "waterPlant.h"
 #include "playMusic.h"
 #include "rotatePot.h"
-#include "controlVent.h"
+#include "monitorPlant.h"
+#include "ventilatePlant.h"
 
 #endif
