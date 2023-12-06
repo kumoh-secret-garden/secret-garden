@@ -10,6 +10,6 @@
 - 모니터링 기능에서 사용됨
 by 조우성
 */
-void *read_dht_data(void *arg);
+void *syncTempHumidInfo(void *arg);
 
 #endif
