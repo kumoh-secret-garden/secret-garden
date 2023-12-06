@@ -3,7 +3,7 @@
 
 #include "common.h"
 
-#define DHT_DATA_GPIO 17 // 실제로 온습도 센서의 데이터 핀
+#define DHT_DATA_GPIO 4 // 실제로 온습도 센서의 데이터 핀
 
 typedef struct
 {
