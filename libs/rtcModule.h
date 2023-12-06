@@ -21,10 +21,9 @@
 /*
 현재 시간을 받아오는 함수
 - 모니터링 기능에서 사용됨
-- 블루투스 모듈에서 호출됨
 by 정연준
 */
-time_t getCurrentTime();
+void *getCurrentTime(void *arg);
 
 /*
 특정 시간마다 다른 센서들을 실행시키는 스케줄러 함수
