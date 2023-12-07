@@ -45,14 +45,19 @@ void* monitor_plant(void* arg){
     pthread_mutex_lock(&mtx_tempHumidInfo);
     pthread_mutex_lock(&mtx_soil_moisture);
     format_data(data_buffer, tempHumidInfo, soil_moisture);
-    pthread_mutex_unlock(&mtx_tempHumidInfo);
     pthread_mutex_unlock(&mtx_soil_moisture);
+    pthread_mutex_unlock(&mtx_tempHumidInfo);
     
     // 데이터를 전송한다
-    write(fd_serial, time_buffer, strlen(time_buffer));
-    write(fd_serial, "\n", 1);
-    write(fd_serial, data_buffer, strlen(data_buffer));
-
+    if(write(fd_serial, time_buffer, strlen(time_buffer)+1) == -1) {
+        printf("Error: Unable to write time_buffer.\n");
+        return NULL;
+    }
+    
+    if(write(fd_serial, data_buffer, strlen(data_buffer)+1) == -1) {
+        printf("Error: Unable to write data_buffer.\n");
+        return NULL;
+    }
     
     // 약간의 딜레이를 준다
     delay(10);
