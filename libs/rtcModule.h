@@ -3,6 +3,7 @@
 
 #include <time.h>
 #include "common.h"
+#include "monitorPlant.h"
 #include "rotatePot.h"
 #include "playMusic.h"
 
