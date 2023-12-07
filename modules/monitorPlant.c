@@ -53,7 +53,7 @@ void* monitor_plant(void* arg){
         printf("Error: Unable to write time_buffer.\n");
         return NULL;
     }
-    
+    write(fd_serial, "\n", 1);
     if(write(fd_serial, data_buffer, strlen(data_buffer)+1) == -1) {
         printf("Error: Unable to write data_buffer.\n");
         return NULL;
