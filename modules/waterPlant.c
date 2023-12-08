@@ -34,10 +34,12 @@ void control_water_pump(float percent)
 {
     if (percent < 50)
     {
+        printf("[물주기 기능 ON!!]\n");
         turnOnWaterPump();
     }
     else
     {
+        printf("[물주기 기능 OFF!!]\n");
         turnOffWaterPump();
     }
 }
@@ -63,7 +65,6 @@ void *water_plant(void *arg)
     int i2c_fd = init_I2C();
     if (i2c_fd >= 0)
     {
-        printf("물주기 기능 started....");
         setup_water_pump();
         int cnt = 0;
         while (1)
@@ -72,8 +73,6 @@ void *water_plant(void *arg)
             int preVal = wiringPiI2CRead(i2c_fd);
             int curVal = wiringPiI2CRead(i2c_fd);
             float percent = 100 - ((float)curVal / 255) * 100;
-            printf("[%d] Previous value = %d", cnt, preVal);
-            printf("Current value = %d", curVal);
             printf("Soil Moisture Percent: %.2f%\n", percent);
 
             // 뮤텍스 잠금
@@ -88,7 +87,7 @@ void *water_plant(void *arg)
             // 워터 펌프 제어
             control_water_pump(percent);
 
-            sleep(60);
+            sleep(1);
             cnt++;
         }
     }
