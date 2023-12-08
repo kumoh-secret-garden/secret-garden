@@ -38,6 +38,7 @@ void one_two_Phase_Rotate_Angle() {
         }
         else {
             direction = CCW;
+            angle -= 10;
         }
     } else if(direction == 1) { // CCW
 
@@ -53,6 +54,7 @@ void one_two_Phase_Rotate_Angle() {
         }
         else {
             direction = CW;
+            angle += 10;
         }
     }
 }
