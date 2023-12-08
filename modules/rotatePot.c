@@ -1,6 +1,5 @@
 #include "rotatePot.h"
-#include <wiringPi.h>
-#include <stdio.h>
+
 
 #define CW 0
 #define CCW 1
@@ -15,7 +14,7 @@ int one_two_phase[8][4]
 {0, 0, 0, 1}, {1, 0, 0, 1}};
 
 
-void init_Step() {
+void init_step() {
     for(int i = 0; i< 4; i++){
         pinMode(GPIO_ARR[i], OUTPUT);
     }
@@ -41,7 +40,7 @@ void rotate_ccw() {
     }
 }
 
-void one_two_Phase_Rotate_Angle() {
+void one_two_phase_rotate_angle() {
     printf("angle = %d\n", angle);
 
     
@@ -77,7 +76,7 @@ void one_two_Phase_Rotate_Angle() {
 void* rotate_pot(void* arg){
     // RTC 모듈에 의해 호출됨
     wiringPiSetupGpio();
-    init_Step();
+    init_step();
     
-    one_two_Phase_Rotate_Angle();
+    one_two_phase_rotate_angle();
 }
