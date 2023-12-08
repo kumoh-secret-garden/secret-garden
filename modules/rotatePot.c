@@ -5,6 +5,8 @@
 #define CW 0
 #define CCW 1
 
+int steps = (4096 * 10) / 360;
+
 
 int one_two_phase[8][4] 
 = {{1, 0, 0, 0}, {1, 1, 0, 0},
@@ -19,41 +21,51 @@ void init_Step() {
     }
 }
 
+void rotate_cw() {
+    for(int i = 0; i < steps; i++) {
+        digitalWrite(GPIO_ARR[3], one_two_phase[i%8][0]);
+        digitalWrite(GPIO_ARR[2], one_two_phase[i%8][1]);
+        digitalWrite(GPIO_ARR[1], one_two_phase[i%8][2]);
+        digitalWrite(GPIO_ARR[0], one_two_phase[i%8][3]);
+        delay(2);
+    }
+}
+
+void rotate_ccw() {
+    for(int i = 0; i < steps; i++) {
+        digitalWrite(GPIO_ARR[0], one_two_phase[i%8][0]);
+        digitalWrite(GPIO_ARR[1], one_two_phase[i%8][1]);
+        digitalWrite(GPIO_ARR[2], one_two_phase[i%8][2]);
+        digitalWrite(GPIO_ARR[3], one_two_phase[i%8][3]);
+        delay(2);
+    }
+}
+
 void one_two_Phase_Rotate_Angle() {
     printf("angle = %d\n", angle);
 
-    int steps = (4096 * 10) / 360;
+    
    
     if(direction == 0) { // CW
 
         if(angle < 180) {
-            for(int i = 0; i < steps; i++) {
-                digitalWrite(GPIO_ARR[3], one_two_phase[i%8][0]);
-                digitalWrite(GPIO_ARR[2], one_two_phase[i%8][1]);
-                digitalWrite(GPIO_ARR[1], one_two_phase[i%8][2]);
-                digitalWrite(GPIO_ARR[0], one_two_phase[i%8][3]);
-                delay(2);
-            }
+            rotate_cw();
             angle += 10;
         }
         else {
             direction = CCW;
+            rotate_ccw();
             angle -= 10;
         }
     } else if(direction == 1) { // CCW
 
         if(angle > -180) {
-            for(int i = 0; i < steps; i++) {
-                digitalWrite(GPIO_ARR[0], one_two_phase[i%8][0]);
-                digitalWrite(GPIO_ARR[1], one_two_phase[i%8][1]);
-                digitalWrite(GPIO_ARR[2], one_two_phase[i%8][2]);
-                digitalWrite(GPIO_ARR[3], one_two_phase[i%8][3]);
-                delay(2);
-            }
+            rotate_ccw();
             angle -= 10;
         }
         else {
             direction = CW;
+            rotate_cw();
             angle += 10;
         }
     }
