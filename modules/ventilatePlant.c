@@ -3,7 +3,7 @@
 /*
 환풍 기능(증산 작용 활성화를 위한 환풍 기능)
 */
-void* ventilate_plant(int arg){
+void *ventilate_plant(void *arg){
     int duty = 0;
     int dir = 0;
     int divisor = 0;
@@ -16,7 +16,7 @@ void* ventilate_plant(int arg){
 
     pwmSetRange(100);
     divisor = 192 / 2;
-    duty = arg;
+    duty = 30;
 
     pwmSetClock(divisor);
 
