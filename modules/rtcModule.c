@@ -1,24 +1,6 @@
 #include "rtcModule.h"
 
 // BCD를 10진수로 변환하는 함수
-static int bcdToDec(int val);
-
-// I2C 설정 함수
-static int initI2C();
-
-// 시간 갱신 함수
-static void updateTime(int i2c_fd);
-
-// 스케줄링 함수
-static void scheduleTask(time_t *lastTime, int interval, void *(*task)(void *), pthread_t *thread);
-
-// 현재 시간을 받아오는 함수
-void *syncCurrentTime(void *arg);
-
-// 특정 시간마다 다른 센서들을 실행시키는 스케줄러 함수
-void *scheduler(void *arg);
-
-// BCD를 10진수로 변환하는 함수
 static int bcdToDec(int val)
 {
     return ((val / 16 * 10) + (val % 16));
@@ -114,7 +96,7 @@ void *scheduler(void *arg)
         scheduleTask(&lastRotateTime, 60, rotate_pot, &rotateThread);
         scheduleTask(&lastMusicTime, 180, play_music, &musicThread);
 
-        sleep(1); // 1초마다 스케줄러 작동
+        delay(1000); // 1초마다 스케줄러 작동
     }
 
     return NULL;

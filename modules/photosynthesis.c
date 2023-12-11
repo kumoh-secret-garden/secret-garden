@@ -7,40 +7,49 @@
     밝기 조절 : 0 ~ 100
 */
 
-void* control_light(void* arg){
+void *control_light(void *arg)
+{
 
-    struct lirc_config *config; //IR 설정 값 저장소
-    int brightness = 40; // LED 초기값
+    struct lirc_config *config; // IR 설정 값 저장소
+    int brightness = 40;        // LED 초기값
 
     softPwmCreate(LED_PIN, brightness, MAX_BRIGHTNESS); // softPWM 설정
-    
-    if(lirc_init("lirc", 1) == -1){ // lirc 초기화
-        return 1;
+
+    if (lirc_init("lirc", 1) == -1)
+    { // lirc 초기화
+        return NULL;
     }
 
     // lirc 설정 파일을 읽음
-    if(lirc_readconfig(NULL, &config, NULL)== 0){
+    if (lirc_readconfig(NULL, &config, NULL) == 0)
+    {
         char *code;
         char *c;
 
-        while(lirc_nextcode(&code) == 0) {
-            //IR코드 수신되면
-            if(code!=NULL){
-                if((lirc_code2char(config, code, &c)) == 0 && c!= NULL)
+        while (lirc_nextcode(&code) == 0)
+        {
+            // IR코드 수신되면
+            if (code != NULL)
+            {
+                if ((lirc_code2char(config, code, &c)) == 0 && c != NULL)
                 {
-                    if(strcmp(c, "KEY_UP") == 0) { //수신값이 "KEY_UP"일 때 밝기 증가
+                    if (strcmp(c, "KEY_UP") == 0)
+                    { // 수신값이 "KEY_UP"일 때 밝기 증가
                         brightness += 20;
-                        if(brightness > 100) {
+                        if (brightness > 100)
+                        {
                             brightness = MAX_BRIGHTNESS;
                         }
                     }
-                    else if(strcmp(c, "KEY_DOWN") == 0) { //수신값이 "KEY_DOWN"일 때 밝기 감소
+                    else if (strcmp(c, "KEY_DOWN") == 0)
+                    { // 수신값이 "KEY_DOWN"일 때 밝기 감소
                         brightness -= 20;
-                        if(brightness < 0) {
+                        if (brightness < 0)
+                        {
                             brightness = 0;
                         }
                     }
-                    softPwmWrite(LED_PIN, brightness); //LED 값 설정
+                    softPwmWrite(LED_PIN, brightness); // LED 값 설정
                     printf("[LED] Current Brightness: %d\n", brightness);
                 }
             }
@@ -48,8 +57,8 @@ void* control_light(void* arg){
         free(code);
         lirc_freeconfig(config);
     }
-    
-    //연결 설정 해제
+
+    // 연결 설정 해제
     softPwmStop(LED_PIN);
     lirc_deinit();
 }

@@ -59,13 +59,13 @@ void *water_plant(void *arg)
 
     while (1)
     {
-        printf("[물주기 기능 토양 수분 측정 On]\n");
+        printf("[토양 수분 측정 Start...]\n");
         wiringPiI2CWrite(i2c_fd, 0x40 | ADC_CHANNEL);
         int preVal = wiringPiI2CRead(i2c_fd);
         int curVal = wiringPiI2CRead(i2c_fd);
         float percent = 100 - ((float)curVal / 255) * 100;
         printf("토양 수분(%): %.2f%\n", percent);
-        printf("[물주기 기능 토양 수분 측정 On]\n");
+        printf("[토양 수분 측정 End...]\n");
         // 뮤텍스 잠금
         pthread_mutex_lock(&mtx_soil_moisture);
 
@@ -78,7 +78,7 @@ void *water_plant(void *arg)
         // 워터 펌프 제어
         control_water_pump(percent);
 
-        sleep(30); // 30초 마다 실행
+        sleep(10); // 10초 마다 실행
     }
 
     return NULL;

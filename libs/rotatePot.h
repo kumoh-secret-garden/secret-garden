@@ -3,6 +3,9 @@
 
 #include "common.h"
 
+#define CW 0
+#define CCW 1
+
 /*
 핀 번호 배열
 */
