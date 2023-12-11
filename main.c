@@ -11,7 +11,7 @@ void init()
 
 int main()
 {
-    initI2C();
+    init();
 
     // 뮤텍스 초기화
     pthread_mutex_init(&mtx_tempHumidInfo, NULL);
