@@ -7,8 +7,8 @@
 #include <lirc/lirc_client.h> // 빌드 시 `-llirc_client` 필요
 
 #define IR_RECEIVER_GPIO 23
-#define IR_SEND_GPIO 24
-#define LED_PIN 25
+#define LED_PIN 24
+#define LED_PIN2 25
 #define MAX_BRIGHTNESS 100
 
 /*
