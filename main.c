@@ -1,6 +1,6 @@
 #include "main.h"
 
-void initI2C()
+void init()
 {
     if (wiringPiSetupGpio() < 0)
     {
