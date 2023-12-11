@@ -1,7 +1,18 @@
 #include "main.h"
 
+void init()
+{
+    if (wiringPiSetupGpio() < 0)
+    {
+        printf("Failed to set up wiringPi");
+        return -1;
+    }
+}
+
 int main()
 {
+    init();
+
     // 뮤텍스 초기화
     pthread_mutex_init(&mtx_tempHumidInfo, NULL);
     pthread_mutex_init(&mtx_current_time, NULL);

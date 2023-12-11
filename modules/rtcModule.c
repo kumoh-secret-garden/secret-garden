@@ -1,13 +1,10 @@
 #include "rtcModule.h"
-#include <wiringPiI2C.h>
-
-static const char *I2C_DEV = "/dev/i2c-1"; // I2C 연결을 위한 장치 파일
 
 // BCD를 10진수로 변환하는 함수
 static int bcdToDec(int val);
 
 // I2C 설정 함수
-static int setupI2C();
+static int initI2C();
 
 // 시간 갱신 함수
 static void updateTime(int i2c_fd);
@@ -28,13 +25,13 @@ static int bcdToDec(int val)
 }
 
 // I2C 설정 함수
-static int setupI2C()
+static int initI2C()
 {
-    if (wiringPiSetup() < 0)
-    {
-        printf("wiringPiSetup() is failed\n");
-        return -1;
-    }
+    // if (wiringPiSetup() < 0)
+    // {
+    //     printf("wiringPiSetup() is failed\n");
+    //     return -1;
+    // }
 
     int i2c_fd = wiringPiI2CSetupInterface(I2C_DEV, SLAVE_ADDR_01);
 
@@ -93,7 +90,7 @@ static void scheduleTask(time_t *lastTime, int interval, void *(*task)(void *), 
 
 void *syncCurrentTime(void *arg)
 {
-    int i2c_fd = setupI2C();
+    int i2c_fd = initI2C();
     if (i2c_fd < 0)
         return NULL;
 
