@@ -3,7 +3,7 @@
 
 #include <time.h>
 #include <wiringPiI2C.h>
-#include "common.h"
+#include "../common.h"
 #include "monitorPlant.h"
 #include "rotatePot.h"
 #include "playMusic.h"

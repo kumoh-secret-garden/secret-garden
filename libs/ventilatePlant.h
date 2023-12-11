@@ -1,10 +1,10 @@
 #ifndef VENTILATE_PLANT_H
 #define VENTILATE_PLANT_H
 
-#include "common.h"
+#include "../common.h"
 
-#define ENCODER_CLK 5 //로터리 엔코더의 CLK번호 5
-#define ENCODER_DT 6 //로터리 엔코더의 DT번호 6
+#define ENCODER_CLK 5 // 로터리 엔코더의 CLK번호 5
+#define ENCODER_DT 6  // 로터리 엔코더의 DT번호 6
 
 #define MOTOR_PWM_PIN1 18 // 실제로 DC 모터의 PWM 핀이 연결된 GPIO 핀 번호
 #define MOTOR_PWM_PIN2 19 // 실제로 DC 모터의 PWM 핀이 연결된 GPIO 핀 번호

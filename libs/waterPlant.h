@@ -1,8 +1,11 @@
 #ifndef WATER_PLANT_H
 #define WATER_PLANT_H
 
-#include "common.h"
-#include <wiringPiSPI.h>
+#include "../common.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <wiringPiI2C.h>
+#include <sys/ioctl.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <time.h>

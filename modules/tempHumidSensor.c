@@ -1,4 +1,4 @@
-#include "tempHumidSensor.h"
+#include "../libs/tempHumidSensor.h"
 
 /*
 온습도 센서에서 정보를 받아오는 함수

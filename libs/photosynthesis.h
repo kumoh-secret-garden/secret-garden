@@ -1,7 +1,7 @@
 #ifndef PHOTOSYNTHESIS_H
 #define PHOTOSYNTHESIS_H
 
-#include "common.h"
+#include "../common.h"
 #include <stdlib.h>
 #include <softPwm.h>
 #include <lirc/lirc_client.h> // 빌드 시 `-llirc_client` 필요

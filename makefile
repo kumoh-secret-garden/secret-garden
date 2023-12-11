@@ -1,29 +1,29 @@
-smart_garden : main.o monitor_plant.o photosynthesis.o play_music.o rotate_pot.o rtc_module.o temp_humid_sensor.o ventilate_plant.o water_plant.o
-	gcc -o smart_garden main.o monitor_plant.o photosynthesis.o play_music.o rotate_pot.o rtc_module.o temp_humid_sensor.o ventilate_plant.o water_plant.o
+smart_garden : main.o monitorPlant.o photosynthesis.o playMusic.o rotatePot.o rtcModule.o tempHumidSensor.o ventilatePlant.o waterPlant.o
+	gcc -o smart_garden main.o monitorPlant.o photosynthesis.o playMusic.o rotatePot.o rtcModule.o tempHumidSensor.o ventilatePlant.o waterPlant.o -llirc_client -lpthread -lwiringPi
 
 main.o : main.c main.h common.h
 	gcc -c main.c
 
-monitor_plant.o : monitorPlant.c monitorPlant.h common.h
-	gcc -c monitorPlant.c
+monitorPlant.o : modules/monitorPlant.c libs/monitorPlant.h common.h
+	gcc -c modules/monitorPlant.c
 
-photosynthesis.o : photosynthesis.c photosynthesis.h common.h
-	gcc -c photosynthesis.c -llirc_client
+photosynthesis.o : modules/photosynthesis.c libs/photosynthesis.h common.h
+	gcc -c modules/photosynthesis.c
 
-play_music.o : playMusic.c playMusic.h common.h
-	gcc -c playMusic.c
+playMusic.o : modules/playMusic.c libs/playMusic.h common.h
+	gcc -c modules/playMusic.c
 
-rotate_pot.o : rotatePot.c rotatePot.h common.h
-	gcc -c rotatePot.c
+rotatePot.o : modules/rotatePot.c libs/rotatePot.h common.h
+	gcc -c modules/rotatePot.c
 
-rtc_module.o : rtcModule.c rtcModule.h common.h
-	gcc -c rtcModule.c
+rtcModule.o : modules/rtcModule.c libs/rtcModule.h common.h
+	gcc -c modules/rtcModule.c
 
-temp_humid_sensor.o : tempHumidSensor.c tempHumidSensor.h common.h
-	gcc -c tempHumidSensor.c
+tempHumidSensor.o : modules/tempHumidSensor.c libs/tempHumidSensor.h common.h
+	gcc -c modules/tempHumidSensor.c
 
-ventilate_plant.o : ventilatePlant.c ventilatePlant.h common.h
-	gcc -c ventilatePlant.c
+ventilatePlant.o : modules/ventilatePlant.c libs/ventilatePlant.h common.h
+	gcc -c modules/ventilatePlant.c
 
-water_plant.o : waterPlant.c waterPlant.h common.h
-	gcc -c waterPlant.c
+waterPlant.o : modules/waterPlant.c libs/waterPlant.h common.h
+	gcc -c modules/waterPlant.c
