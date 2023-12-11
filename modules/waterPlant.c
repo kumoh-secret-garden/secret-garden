@@ -51,32 +51,35 @@ by 정연준
 void *water_plant(void *arg)
 {
     int i2c_fd = init_I2C();
-    if (i2c_fd >= 0)
+
+    if (i2c_fd < 0)
+        return NULL;
+
+    setup_water_pump();
+
+    while (1)
     {
-        setup_water_pump();
-        while (1)
-        {
-            printf("[물주기 기능 토양 수분 측정 On]\n");
-            wiringPiI2CWrite(i2c_fd, 0x40 | ADC_CHANNEL);
-            int preVal = wiringPiI2CRead(i2c_fd);
-            int curVal = wiringPiI2CRead(i2c_fd);
-            float percent = 100 - ((float)curVal / 255) * 100;
-            printf("토양 수분(%): %.2f%\n", percent);
-            printf("[물주기 기능 토양 수분 측정 On]\n");
-            // 뮤텍스 잠금
-            pthread_mutex_lock(&mtx_soil_moisture);
+        printf("[물주기 기능 토양 수분 측정 On]\n");
+        wiringPiI2CWrite(i2c_fd, 0x40 | ADC_CHANNEL);
+        int preVal = wiringPiI2CRead(i2c_fd);
+        int curVal = wiringPiI2CRead(i2c_fd);
+        float percent = 100 - ((float)curVal / 255) * 100;
+        printf("토양 수분(%): %.2f%\n", percent);
+        printf("[물주기 기능 토양 수분 측정 On]\n");
+        // 뮤텍스 잠금
+        pthread_mutex_lock(&mtx_soil_moisture);
 
-            // soil_moisture 갱신
-            soil_moisture = percent;
+        // soil_moisture 갱신
+        soil_moisture = percent;
 
-            // 뮤텍스 해제
-            pthread_mutex_unlock(&mtx_soil_moisture);
+        // 뮤텍스 해제
+        pthread_mutex_unlock(&mtx_soil_moisture);
 
-            // 워터 펌프 제어
-            control_water_pump(percent);
+        // 워터 펌프 제어
+        control_water_pump(percent);
 
-            sleep(30); // 30초 마다 실행
-        }
+        sleep(30); // 30초 마다 실행
     }
+
     return NULL;
 }
