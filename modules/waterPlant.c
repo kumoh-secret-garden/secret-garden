@@ -1,20 +1,12 @@
 #include "waterPlant.h"
-#include <wiringPiSPI.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <time.h>
-
-#define SLAVE_ADDR 0x48
-#define I2C_DEV "/dev/i2c-1"
-#define ADC_CHANNEL 2
 
 int init_I2C()
 {
-    if (wiringPiSetupGpio() < 0)
-    {
-        printf("Failed to set up wiringPi");
-        return -1;
-    }
+    // if (wiringPiSetupGpio() < 0)
+    // {
+    //     printf("Failed to set up wiringPi");
+    //     return -1;
+    // }
 
     int i2c_fd = wiringPiI2CSetupInterface(I2C_DEV, SLAVE_ADDR);
     if (i2c_fd < 0)
@@ -34,12 +26,8 @@ void control_water_pump(float percent)
 {
     if (percent < 50)
     {
-        printf("[물주기 기능 ON!!]\n");
         turnOnWaterPump();
-    }
-    else
-    {
-        printf("[물주기 기능 OFF!!]\n");
+        delay(1000); // 1초간 물 주기
         turnOffWaterPump();
     }
 }
@@ -47,13 +35,13 @@ void control_water_pump(float percent)
 void turnOnWaterPump()
 {
     digitalWrite(WATER_PUMP_PIN, HIGH); // 워터 펌프 켜기
-    printf("Water pump is turned on.");
+    printf("[워터 펌프 On]\n");
 }
 
 void turnOffWaterPump()
 {
     digitalWrite(WATER_PUMP_PIN, LOW); // 워터 펌프 끄기
-    printf("Water pump is turned off.");
+    printf("[워터 펌프 Off]\n");
 }
 
 /*
@@ -66,15 +54,15 @@ void *water_plant(void *arg)
     if (i2c_fd >= 0)
     {
         setup_water_pump();
-        int cnt = 0;
         while (1)
         {
+            printf("[물주기 기능 토양 수분 측정 On]\n");
             wiringPiI2CWrite(i2c_fd, 0x40 | ADC_CHANNEL);
             int preVal = wiringPiI2CRead(i2c_fd);
             int curVal = wiringPiI2CRead(i2c_fd);
             float percent = 100 - ((float)curVal / 255) * 100;
-            printf("Soil Moisture Percent: %.2f%\n", percent);
-
+            printf("토양 수분(%): %.2f%\n", percent);
+            printf("[물주기 기능 토양 수분 측정 On]\n");
             // 뮤텍스 잠금
             pthread_mutex_lock(&mtx_soil_moisture);
 
@@ -87,8 +75,7 @@ void *water_plant(void *arg)
             // 워터 펌프 제어
             control_water_pump(percent);
 
-            sleep(1);
-            cnt++;
+            sleep(30); // 30초 마다 실행
         }
     }
     return NULL;
