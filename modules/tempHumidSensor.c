@@ -96,11 +96,10 @@ void readDHTInfo()
 
 void *syncTempHumidInfo(void *arg)
 {
+	printf("[온습도 센서 On]\n");
 	while (1)
 	{
-		printf("[온습도 센서 On]\n");
 		readDHTInfo(); // 온도 및 습도 데이터 획득 및 출력
-		printf("[온습도 센서 On]\n");
 		sleep(2); // 다음 읽기까지 2초 대기
 	}
 
