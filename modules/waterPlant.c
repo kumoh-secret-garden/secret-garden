@@ -1,5 +1,8 @@
 #include "../libs/waterPlant.h"
 
+void turnOnWaterPump();
+void turnOffWaterPump();
+
 int init_I2C()
 {
     // if (wiringPiSetupGpio() < 0)
