@@ -1,7 +1,7 @@
 #ifndef MONITOR_PLANT_H
 #define MONITOR_PLANT_H
 
-#include "common.h"
+#include "../common.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <wiringPi.h>

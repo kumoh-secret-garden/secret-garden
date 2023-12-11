@@ -1,4 +1,4 @@
-#include "rotatePot.h"
+#include "../libs/rotatePot.h"
 
 int steps = (4096 * 10) / 360;
 

@@ -1,7 +1,7 @@
 #ifndef PLAY_MUSIC_H
 #define PLAY_MUSIC_H
 
-#include "common.h"
+#include "../common.h"
 #include <softTone.h>
 #include <time.h>
 
@@ -10,13 +10,15 @@
 #define SONG_COUNT 3
 
 // 계이름 표 구조
-typedef struct {
-    char* note_name;
+typedef struct
+{
+    char *note_name;
     float frequency;
 } Note;
 
 // 노래 목록 구조
-typedef struct{
+typedef struct
+{
     int *notes;
     int length;
 } Song;

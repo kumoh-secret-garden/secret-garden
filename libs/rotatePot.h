@@ -1,7 +1,7 @@
 #ifndef ROTATEPOT_H
 #define ROTATEPOT_H
 
-#include "common.h"
+#include "../common.h"
 
 #define CW 0
 #define CCW 1

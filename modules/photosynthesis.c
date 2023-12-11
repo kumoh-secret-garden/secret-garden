@@ -1,4 +1,4 @@
-#include "photosynthesis.h"
+#include "../libs/photosynthesis.h"
 
 /*
 광합성 기능(LED를 통한 광합성 기능)

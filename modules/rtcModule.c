@@ -1,4 +1,4 @@
-#include "rtcModule.h"
+#include "../libs/rtcModule.h"
 
 // BCD를 10진수로 변환하는 함수
 static int bcdToDec(int val)

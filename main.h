@@ -3,10 +3,10 @@
 
 #include "common.h"
 
-#include "photosynthesis.h"
-#include "rtcModule.h"
-#include "tempHumidSensor.h"
-#include "ventilatePlant.h"
-#include "waterPlant.h"
+#include "libs/photosynthesis.h"
+#include "libs/rtcModule.h"
+#include "libs/tempHumidSensor.h"
+#include "libs/ventilatePlant.h"
+#include "libs/waterPlant.h"
 
 #endif

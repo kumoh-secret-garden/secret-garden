@@ -1,7 +1,7 @@
 #ifndef WATER_PLANT_H
 #define WATER_PLANT_H
 
-#include "common.h"
+#include "../common.h"
 #include <wiringPiSPI.h>
 #include <stdlib.h>
 #include <stdint.h>
