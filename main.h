@@ -4,10 +4,9 @@
 #include "common.h"
 
 #include "photosynthesis.h"
-#include "waterPlant.h"
-#include "playMusic.h"
-#include "rotatePot.h"
-#include "monitorPlant.h"
+#include "rtcModule.h"
+#include "tempHumidSensor.h"
 #include "ventilatePlant.h"
+#include "waterPlant.h"
 
 #endif

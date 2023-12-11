@@ -2,7 +2,9 @@
 #define RTC_MODULE_H
 
 #include <time.h>
+#include <wiringPiI2C.h>
 #include "common.h"
+#include "monitorPlant.h"
 #include "rotatePot.h"
 #include "playMusic.h"
 
@@ -17,6 +19,7 @@
 #define DATE_REG 0x04      // date register
 #define MONTH_REG 0x05     // month register
 #define YEAR_REG 0x06      // year register
+#define I2C_DEV "/dev/i2c-1"
 
 /*
 현재 시간을 받아오는 함수

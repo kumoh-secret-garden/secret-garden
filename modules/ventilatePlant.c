@@ -3,6 +3,7 @@
 /*
 환풍 기능(증산 작용 활성화를 위한 환풍 기능)
 */
+
 void *ventilate_plant(void *arg){
     int cnt = 0; //cnt는 펄스 값이 바뀔 때 마다 방향에 따라 바뀔 변수입니다. 초기 상태는 0입니다.
     int current = 0; //current는 펄스 값이 바뀔 때 마다 읽어들일 변수입니다.
@@ -17,8 +18,8 @@ void *ventilate_plant(void *arg){
 
     last = digitalRead(ENCODER_CLK); // 전역변수 last를 초기 펄스 상태로 초기화해줍니다.
 
-    pinMode(MOTOR_PWM_PIN1 , PWM_OUTPUT); //GPIO 18 PWM
-    pinMode(MOTOR_PWM_PIN2 , PWM_OUTPUT); //GPIO 19 PWM
+    pinMode(MOTOR_PWM_PIN1, PWM_OUTPUT); // GPIO 18 PWM
+    pinMode(MOTOR_PWM_PIN2, PWM_OUTPUT); // GPIO 19 PWM
     pwmSetMode(PWM_MODE_MS);
 
     pwmSetRange(100);
