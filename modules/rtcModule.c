@@ -4,7 +4,7 @@
 static int bcdToDec(int val);
 
 // I2C 설정 함수
-static int setupI2C();
+static int initI2C();
 
 // 시간 갱신 함수
 static void updateTime(int i2c_fd);
@@ -90,7 +90,7 @@ static void scheduleTask(time_t *lastTime, int interval, void *(*task)(void *), 
 
 void *syncCurrentTime(void *arg)
 {
-    int i2c_fd = setupI2C();
+    int i2c_fd = initI2C();
     if (i2c_fd < 0)
         return NULL;
 
