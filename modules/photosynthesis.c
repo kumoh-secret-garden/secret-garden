@@ -12,8 +12,10 @@ void *control_light(void *arg)
 
     struct lirc_config *config; // IR 설정 값 저장소
     int brightness = 40;        // LED 초기값
+    printf("[광합성 기능 ON]\n");
 
     softPwmCreate(LED_PIN, brightness, MAX_BRIGHTNESS); // softPWM 설정
+    softPwmCreate(LED_PIN2, brightness, MAX_BRIGHTNESS);
 
     if (lirc_init("lirc", 1) == -1)
     { // lirc 초기화
@@ -50,6 +52,7 @@ void *control_light(void *arg)
                         }
                     }
                     softPwmWrite(LED_PIN, brightness); // LED 값 설정
+                    softPwmWrite(LED_PIN2, brightness);
                     printf("[LED] Current Brightness: %d\n", brightness);
                 }
             }

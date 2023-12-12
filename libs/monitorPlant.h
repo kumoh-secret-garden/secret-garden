@@ -13,7 +13,7 @@
 #define UART_TX_GPIO 0   // 전송(TX)을 위한 핀
 #define UART_RX_GPIO 1   // 수신(RX)을 위한 핀
 
-#define UART_DEV "/dev/ttyAMA1"
+#define UART_DEV "/dev/ttyAMA0"
 
 /*
 식물 상태 모니터링 기능(온도, 습도, 토양 수분, 시간 정보 제공 기능)
