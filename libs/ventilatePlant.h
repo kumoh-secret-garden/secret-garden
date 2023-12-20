@@ -14,6 +14,6 @@
 by 조우성
 -로터리 엔코더 값의 10배의 duty로 dc모터를 회전시킴
 */
-void *ventilate_plant(void *arg);
+void *ventilatePlant(void *arg);
 
 #endif

@@ -1,5 +1,12 @@
 #include "../libs/photosynthesis.h"
 
+extern ClimateData temp_humid_info; // 온습도 정보
+extern time_t current_time;       // 현재 시각
+extern float soil_moisture;       // 토양 수분
+extern pthread_mutex_t mtx_temp_humid_info;  // 온습도 정보를 보호하기 위한 뮤텍스
+extern pthread_mutex_t mtx_current_time;  // 현재 시각을 보호하기 위한 뮤텍스
+extern pthread_mutex_t mtx_soil_moisture; // 토양 수분을 보호하기 위한 뮤텍스
+
 /*
 광합성 기능(LED를 통한 광합성 기능)
     리모컨을 통해 사용자로부터 밝기 값 받아오기
@@ -7,7 +14,7 @@
     밝기 조절 : 0 ~ 100
 */
 
-void *control_light(void *arg)
+void *controlLight(void *arg)
 {
 
     struct lirc_config *config; // IR 설정 값 저장소

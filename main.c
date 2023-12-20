@@ -1,5 +1,13 @@
 #include "main.h"
 
+ClimateData temp_humid_info; // 온습도 정보
+time_t current_time;       // 현재 시각
+float soil_moisture;       // 토양 수분
+
+pthread_mutex_t mtx_temp_humid_info;  // 온습도 정보를 보호하기 위한 뮤텍스
+pthread_mutex_t mtx_current_time;  // 현재 시각을 보호하기 위한 뮤텍스
+pthread_mutex_t mtx_soil_moisture; // 토양 수분을 보호하기 위한 뮤텍스
+
 int init()
 {
     if (wiringPiSetupGpio() < 0)
@@ -29,17 +37,17 @@ int main()
         return -1;
 
     // 뮤텍스 초기화
-    pthread_mutex_init(&mtx_tempHumidInfo, NULL);
+    pthread_mutex_init(&mtx_temp_humid_info, NULL);
     pthread_mutex_init(&mtx_current_time, NULL);
     pthread_mutex_init(&mtx_soil_moisture, NULL);
 
     // 각 스레드에서 수행할 함수 지정
-    createThread(&photosynthesis_thread, control_light, NULL);
+    createThread(&photosynthesis_thread, controlLight, NULL);
     createThread(&sync_current_time_thread, syncCurrentTime, NULL);
     createThread(&scheduler_thread, scheduler, NULL);
     createThread(&temp_humid_sensor_thread, syncTempHumidInfo, NULL);
-    createThread(&ventilate_plant_thread, ventilate_plant, NULL);
-    createThread(&water_plant_thread, water_plant, NULL);
+    createThread(&ventilate_plant_thread, ventilatePlant, NULL);
+    createThread(&water_plant_thread, waterPlant, NULL);
 
     pthread_join(photosynthesis_thread, NULL);
     pthread_join(sync_current_time_thread, NULL);
@@ -48,22 +56,8 @@ int main()
     pthread_join(ventilate_plant_thread, NULL);
     pthread_join(water_plant_thread, NULL);
 
-    // 각 스레드를 detach 상태로 설정
-    // pthread_detach(photosynthesis_thread);
-    // pthread_detach(watering_thread);
-    // pthread_detach(music_thread);
-    // pthread_detach(rotating_thread);
-    // pthread_detach(monitoring_thread);
-    // pthread_detach(ventilating_thread);
-
-    // // 메인 스레드는 무한 루프를 돌며 작동
-    // while (1)
-    // {
-    //     sleep(10);
-    // }
-
     // 뮤텍스 삭제
-    pthread_mutex_destroy(&mtx_tempHumidInfo);
+    pthread_mutex_destroy(&mtx_temp_humid_info);
     pthread_mutex_destroy(&mtx_current_time);
     pthread_mutex_destroy(&mtx_soil_moisture);
 

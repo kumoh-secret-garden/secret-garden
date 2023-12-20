@@ -1,5 +1,12 @@
 #include "../libs/tempHumidSensor.h"
 
+extern ClimateData temp_humid_info; // 온습도 정보
+extern time_t current_time;       // 현재 시각
+extern float soil_moisture;       // 토양 수분
+extern pthread_mutex_t mtx_temp_humid_info;  // 온습도 정보를 보호하기 위한 뮤텍스
+extern pthread_mutex_t mtx_current_time;  // 현재 시각을 보호하기 위한 뮤텍스
+extern pthread_mutex_t mtx_soil_moisture; // 토양 수분을 보호하기 위한 뮤텍스
+
 /*
 온습도 센서에서 정보를 받아오는 함수
 */
@@ -63,16 +70,16 @@ void readDHTInfo()
 		{
 			printf("Humidity = %d.%d , Temperature = %d.%d C\n", dataDHT[0], dataDHT[1], dataDHT[2], dataDHT[3]);
 
-			ClimateData sensorTempHumidInfo = {(float)dataDHT[0] + ((float)dataDHT[1] * 0.1f), (float)dataDHT[2] + ((float)dataDHT[3] * 0.1f)};
+			ClimateData sensorTempHumidInfo = { (float)dataDHT[2] + ((float)dataDHT[3] * 0.1f), (float)dataDHT[0] + ((float)dataDHT[1] * 0.1f)};
 
 			// 뮤텍스 잠금
-			pthread_mutex_lock(&mtx_tempHumidInfo);
+			pthread_mutex_lock(&mtx_temp_humid_info);
 
 			// tempHumidInfo 갱신
-			tempHumidInfo = sensorTempHumidInfo; //
+			temp_humid_info = sensorTempHumidInfo; //
 
 			// 뮤텍스 해제
-			pthread_mutex_unlock(&mtx_tempHumidInfo);
+			pthread_mutex_unlock(&mtx_temp_humid_info);
 		}
 		else
 		{
