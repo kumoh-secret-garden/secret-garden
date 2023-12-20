@@ -1,5 +1,12 @@
 #include "../libs/rtcModule.h"
 
+extern ClimateData tempHumidInfo; // 온습도 정보
+extern time_t current_time;       // 현재 시각
+extern float soil_moisture;       // 토양 수분
+extern pthread_mutex_t mtx_tempHumidInfo;  // 온습도 정보를 보호하기 위한 뮤텍스
+extern pthread_mutex_t mtx_current_time;  // 현재 시각을 보호하기 위한 뮤텍스
+extern pthread_mutex_t mtx_soil_moisture; // 토양 수분을 보호하기 위한 뮤텍스
+
 // BCD를 10진수로 변환하는 함수
 static int bcdToDec(int val)
 {
@@ -44,7 +51,7 @@ static void updateTime(int i2c_fd)
 
     // current_time 갱신
     current_time = mktime(&timeinfo); // struct tm을 time_t로 변환
-
+    
     // 뮤텍스 해제
     pthread_mutex_unlock(&mtx_current_time);
 }
@@ -92,9 +99,9 @@ void *scheduler(void *arg)
 
     while (1)
     {
-        scheduleTask(&lastMonitorTime, 30, monitor_plant, &monitorThread);
-        scheduleTask(&lastRotateTime, 60, rotate_pot, &rotateThread);
-        scheduleTask(&lastMusicTime, 180, play_music, &musicThread);
+        scheduleTask(&lastMonitorTime, 5, monitor_plant, &monitorThread);
+        scheduleTask(&lastRotateTime, 3, rotate_pot, &rotateThread);
+        scheduleTask(&lastMusicTime, 30, play_music, &musicThread);
 
         delay(1000); // 1초마다 스케줄러 작동
     }

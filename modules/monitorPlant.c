@@ -1,5 +1,15 @@
 #include "../libs/monitorPlant.h"
 
+extern ClimateData tempHumidInfo; // 온습도 정보
+extern time_t current_time;       // 현재 시각
+extern float soil_moisture;       // 토양 수분
+extern pthread_mutex_t mtx_tempHumidInfo;  // 온습도 정보를 보호하기 위한 뮤텍스
+extern pthread_mutex_t mtx_current_time;  // 현재 시각을 보호하기 위한 뮤텍스
+extern pthread_mutex_t mtx_soil_moisture; // 토양 수분을 보호하기 위한 뮤텍스
+
+extern float soil_moisture;       // 토양 수분
+
+extern pthread_mutex_t mtx_soil_moisture; // 토양 수분을 보호하기 위한 뮤텍스
 // 시간을 문자열로 변환하는 함수
 void format_time(char *buffer, time_t time)
 {
@@ -30,7 +40,6 @@ void *monitor_plant(void *arg)
         printf("Unable to open serial device.\n");
         return NULL;
     }
-
     // 락을 걸고 데이터를 읽는다
     pthread_mutex_lock(&mtx_current_time);
     format_time(time_buffer, current_time);

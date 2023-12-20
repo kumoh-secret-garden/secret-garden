@@ -1,5 +1,12 @@
 #include "../libs/ventilatePlant.h"
 
+extern ClimateData tempHumidInfo; // 온습도 정보
+extern time_t current_time;       // 현재 시각
+extern float soil_moisture;       // 토양 수분
+extern pthread_mutex_t mtx_tempHumidInfo;  // 온습도 정보를 보호하기 위한 뮤텍스
+extern pthread_mutex_t mtx_current_time;  // 현재 시각을 보호하기 위한 뮤텍스
+extern pthread_mutex_t mtx_soil_moisture; // 토양 수분을 보호하기 위한 뮤텍스
+
 /*
 환풍 기능(증산 작용 활성화를 위한 환풍 기능)
 */
@@ -25,11 +32,13 @@ void *ventilate_plant(void *arg)
 
     pwmSetRange(100);
     divisor = 192 / 2;
-    duty = 0;
+    duty = 20;
+    pwmWrite(MOTOR_PWM_PIN2, duty);
+    pwmWrite(MOTOR_PWM_PIN1, 1);
 
     pwmSetClock(divisor);
 
-    printf("로터리 엔코더 cnt = %d \n", cnt); // cnt가 0일 때 프로그램이 실행된 걸 보여주기 위해 한번 출력합니다.
+    // printf("로터리 엔코더 cnt = %d \n", cnt); // cnt가 0일 때 프로그램이 실행된 걸 보여주기 위해 한번 출력합니다.
 
     while (1)
     {
@@ -40,7 +49,7 @@ void *ventilate_plant(void *arg)
             if (digitalRead(ENCODER_DT) != current)
             {          // ENCODER_DT핀의 값으로 회전 방향을 판단합니다. 여기서는 CW 방향입니다.
                 cnt++; // CW 방향이므로 cnt 1 증가
-                printf("cnt = %d \n", cnt);
+                // printf("cnt = %d \n", cnt);
 
                 duty = cnt * 10;
                 pwmWrite(MOTOR_PWM_PIN2, duty);
@@ -49,7 +58,10 @@ void *ventilate_plant(void *arg)
             else
             {          // CCW 방향을 판단합니다.
                 cnt--; // CCW 방향이므로 cnt 1 감소
-                printf("cnt = %d \n", cnt);
+                if( cnt < 0) {
+                    cnt = 0;
+                }
+                // printf("cnt = %d \n", cnt);
 
                 duty = cnt * 10;
                 pwmWrite(MOTOR_PWM_PIN2, duty);

@@ -1,5 +1,12 @@
 #include "../libs/playMusic.h"
 
+extern ClimateData tempHumidInfo; // 온습도 정보
+extern time_t current_time;       // 현재 시각
+extern float soil_moisture;       // 토양 수분
+extern pthread_mutex_t mtx_tempHumidInfo;  // 온습도 정보를 보호하기 위한 뮤텍스
+extern pthread_mutex_t mtx_current_time;  // 현재 시각을 보호하기 위한 뮤텍스
+extern pthread_mutex_t mtx_soil_moisture; // 토양 수분을 보호하기 위한 뮤텍스
+
 /*
 음악 재생 기능(특정 시간마다 음악을 재생하는 기능)
 */

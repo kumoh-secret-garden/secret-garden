@@ -1,5 +1,12 @@
 #include "../libs/waterPlant.h"
 
+extern ClimateData tempHumidInfo; // 온습도 정보
+extern time_t current_time;       // 현재 시각
+extern float soil_moisture;       // 토양 수분
+extern pthread_mutex_t mtx_tempHumidInfo;  // 온습도 정보를 보호하기 위한 뮤텍스
+extern pthread_mutex_t mtx_current_time;  // 현재 시각을 보호하기 위한 뮤텍스
+extern pthread_mutex_t mtx_soil_moisture; // 토양 수분을 보호하기 위한 뮤텍스
+
 void turnOnWaterPump();
 void turnOffWaterPump();
 
@@ -30,7 +37,7 @@ void control_water_pump(float percent)
     if (percent < 50)
     {
         turnOnWaterPump();
-        delay(1000); // 1초간 물 주기
+        delay(2000); // 2초간 물 주기
         turnOffWaterPump();
     }
 }
