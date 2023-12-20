@@ -1,9 +1,9 @@
 #include "../libs/ventilatePlant.h"
 
-extern ClimateData tempHumidInfo; // 온습도 정보
+extern ClimateData temp_humid_info; // 온습도 정보
 extern time_t current_time;       // 현재 시각
 extern float soil_moisture;       // 토양 수분
-extern pthread_mutex_t mtx_tempHumidInfo;  // 온습도 정보를 보호하기 위한 뮤텍스
+extern pthread_mutex_t mtx_temp_humid_info;  // 온습도 정보를 보호하기 위한 뮤텍스
 extern pthread_mutex_t mtx_current_time;  // 현재 시각을 보호하기 위한 뮤텍스
 extern pthread_mutex_t mtx_soil_moisture; // 토양 수분을 보호하기 위한 뮤텍스
 
@@ -11,13 +11,13 @@ extern pthread_mutex_t mtx_soil_moisture; // 토양 수분을 보호하기 위�
 환풍 기능(증산 작용 활성화를 위한 환풍 기능)
 */
 
-void *ventilate_plant(void *arg)
+void *ventilatePlant(void *arg)
 {
     int cnt = 0;     // cnt는 펄스 값이 바뀔 때 마다 방향에 따라 바뀔 변수입니다. 초기 상태는 0입니다.
     int current = 0; // current는 펄스 값이 바뀔 때 마다 읽어들일 변수입니다.
 
     int last = 0;
-    int duty = 0;
+    int duty = 20;
     int dir = 0;
     int divisor = 0;
 
@@ -32,13 +32,12 @@ void *ventilate_plant(void *arg)
 
     pwmSetRange(100);
     divisor = 192 / 2;
-    duty = 20;
     pwmWrite(MOTOR_PWM_PIN2, duty);
     pwmWrite(MOTOR_PWM_PIN1, 1);
 
     pwmSetClock(divisor);
 
-    // printf("로터리 엔코더 cnt = %d \n", cnt); // cnt가 0일 때 프로그램이 실행된 걸 보여주기 위해 한번 출력합니다.
+    printf("[환풍 기능 ON]\n"); // 프로그램이 실행된 걸 보여주기 위해 한번 출력합니다.
 
     while (1)
     {

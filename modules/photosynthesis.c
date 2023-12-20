@@ -1,9 +1,9 @@
 #include "../libs/photosynthesis.h"
 
-extern ClimateData tempHumidInfo; // 온습도 정보
+extern ClimateData temp_humid_info; // 온습도 정보
 extern time_t current_time;       // 현재 시각
 extern float soil_moisture;       // 토양 수분
-extern pthread_mutex_t mtx_tempHumidInfo;  // 온습도 정보를 보호하기 위한 뮤텍스
+extern pthread_mutex_t mtx_temp_humid_info;  // 온습도 정보를 보호하기 위한 뮤텍스
 extern pthread_mutex_t mtx_current_time;  // 현재 시각을 보호하기 위한 뮤텍스
 extern pthread_mutex_t mtx_soil_moisture; // 토양 수분을 보호하기 위한 뮤텍스
 
@@ -14,7 +14,7 @@ extern pthread_mutex_t mtx_soil_moisture; // 토양 수분을 보호하기 위�
     밝기 조절 : 0 ~ 100
 */
 
-void *control_light(void *arg)
+void *controlLight(void *arg)
 {
 
     struct lirc_config *config; // IR 설정 값 저장소

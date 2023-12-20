@@ -15,6 +15,6 @@
 광합성 기능(LED를 통한 광합성 기능)
 by 이지현
 */
-void *control_light(void *arg);
+void *controlLight(void *arg);
 
 #endif

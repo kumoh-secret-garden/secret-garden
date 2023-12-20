@@ -1,9 +1,9 @@
 #include "../libs/playMusic.h"
 
-extern ClimateData tempHumidInfo; // 온습도 정보
+extern ClimateData temp_humid_info; // 온습도 정보
 extern time_t current_time;       // 현재 시각
 extern float soil_moisture;       // 토양 수분
-extern pthread_mutex_t mtx_tempHumidInfo;  // 온습도 정보를 보호하기 위한 뮤텍스
+extern pthread_mutex_t mtx_temp_humid_info;  // 온습도 정보를 보호하기 위한 뮤텍스
 extern pthread_mutex_t mtx_current_time;  // 현재 시각을 보호하기 위한 뮤텍스
 extern pthread_mutex_t mtx_soil_moisture; // 토양 수분을 보호하기 위한 뮤텍스
 
@@ -31,7 +31,7 @@ Song songs[SONG_COUNT] = {
 };
 
 // RTC 모듈에 의해 호출됨
-void *play_music(void *arg)
+void *playMusic(void *arg)
 {
     srand(time(NULL)); // 노래를 랜덤으로 재생하기 위한 난수 생성
     int i;

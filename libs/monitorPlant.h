@@ -19,6 +19,6 @@
 식물 상태 모니터링 기능(온도, 습도, 토양 수분, 시간 정보 제공 기능)
 by 정영한
 */
-void *monitor_plant(void *arg);
+void *monitorPlant(void *arg);
 
 #endif

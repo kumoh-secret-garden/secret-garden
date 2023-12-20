@@ -1,9 +1,9 @@
 #include "../libs/monitorPlant.h"
 
-extern ClimateData tempHumidInfo; // 온습도 정보
+extern ClimateData temp_humid_info; // 온습도 정보
 extern time_t current_time;       // 현재 시각
 extern float soil_moisture;       // 토양 수분
-extern pthread_mutex_t mtx_tempHumidInfo;  // 온습도 정보를 보호하기 위한 뮤텍스
+extern pthread_mutex_t mtx_temp_humid_info;  // 온습도 정보를 보호하기 위한 뮤텍스
 extern pthread_mutex_t mtx_current_time;  // 현재 시각을 보호하기 위한 뮤텍스
 extern pthread_mutex_t mtx_soil_moisture; // 토양 수분을 보호하기 위한 뮤텍스
 
@@ -11,14 +11,14 @@ extern float soil_moisture;       // 토양 수분
 
 extern pthread_mutex_t mtx_soil_moisture; // 토양 수분을 보호하기 위한 뮤텍스
 // 시간을 문자열로 변환하는 함수
-void format_time(char *buffer, time_t time)
+void formatTime(char *buffer, time_t time)
 {
     struct tm *tm_info = localtime(&time);
     strftime(buffer, 26, "[%Y/%m/%d %H:%M:%S]", tm_info);
 }
 
 // 데이터를 문자열로 변환하는 함수
-void format_data(char *buffer, ClimateData data, float soil_moisture)
+void formatData(char *buffer, ClimateData data, float soil_moisture)
 {
     sprintf(buffer, "토양 수분 = %.2f\n온도 = %.2f\n습도 = %.2f\n", soil_moisture, data.temperature, data.humidity);
 }
@@ -26,7 +26,7 @@ void format_data(char *buffer, ClimateData data, float soil_moisture)
 /*
 식물 상태 모니터링 기능(온도, 습도, 토양 수분, 시간 정보 제공 기능)
 */
-void *monitor_plant(void *arg)
+void *monitorPlant(void *arg)
 {
     int fd_serial;
     char time_buffer[26];
@@ -42,14 +42,14 @@ void *monitor_plant(void *arg)
     }
     // 락을 걸고 데이터를 읽는다
     pthread_mutex_lock(&mtx_current_time);
-    format_time(time_buffer, current_time);
+    formatTime(time_buffer, current_time);
     pthread_mutex_unlock(&mtx_current_time);
 
-    pthread_mutex_lock(&mtx_tempHumidInfo);
+    pthread_mutex_lock(&mtx_temp_humid_info);
     pthread_mutex_lock(&mtx_soil_moisture);
-    format_data(data_buffer, tempHumidInfo, soil_moisture);
+    formatData(data_buffer, temp_humid_info, soil_moisture);
     pthread_mutex_unlock(&mtx_soil_moisture);
-    pthread_mutex_unlock(&mtx_tempHumidInfo);
+    pthread_mutex_unlock(&mtx_temp_humid_info);
 
     printf("[모니터링 기능 Start...]\n");
     // 데이터를 전송한다

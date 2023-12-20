@@ -1,9 +1,9 @@
 #include "../libs/rotatePot.h"
 
-extern ClimateData tempHumidInfo; // 온습도 정보
+extern ClimateData temp_humid_info; // 온습도 정보
 extern time_t current_time;       // 현재 시각
 extern float soil_moisture;       // 토양 수분
-extern pthread_mutex_t mtx_tempHumidInfo;  // 온습도 정보를 보호하기 위한 뮤텍스
+extern pthread_mutex_t mtx_temp_humid_info;  // 온습도 정보를 보호하기 위한 뮤텍스
 extern pthread_mutex_t mtx_current_time;  // 현재 시각을 보호하기 위한 뮤텍스
 extern pthread_mutex_t mtx_soil_moisture; // 토양 수분을 보호하기 위한 뮤텍스
 
@@ -11,7 +11,7 @@ int steps = (4096 * 10) / 360;
 
 int one_two_phase[8][4] = {{1, 0, 0, 0}, {1, 1, 0, 0}, {0, 1, 0, 0}, {0, 1, 1, 0}, {0, 0, 1, 0}, {0, 0, 1, 1}, {0, 0, 0, 1}, {1, 0, 0, 1}};
 
-void init_step()
+void initStep()
 {
     for (int i = 0; i < 4; i++)
     {
@@ -19,7 +19,7 @@ void init_step()
     }
 }
 
-void rotate_cw()
+void rotateCw()
 {
     for (int i = 0; i < steps; i++)
     {
@@ -31,7 +31,7 @@ void rotate_cw()
     }
 }
 
-void rotate_ccw()
+void rotateCcw()
 {
     for (int i = 0; i < steps; i++)
     {
@@ -43,7 +43,7 @@ void rotate_ccw()
     }
 }
 
-void one_two_phase_rotate_angle()
+void oneTwoPhaseRotateAngle()
 {
     printf("angle = %d\n", angle);
 
@@ -52,13 +52,13 @@ void one_two_phase_rotate_angle()
 
         if (angle < 180)
         {
-            rotate_cw();
+            rotateCw();
             angle += 10;
         }
         else
         {
             direction = CCW;
-            rotate_ccw();
+            rotateCcw();
             angle -= 10;
         }
     }
@@ -67,13 +67,13 @@ void one_two_phase_rotate_angle()
 
         if (angle > -180)
         {
-            rotate_ccw();
+            rotateCcw();
             angle -= 10;
         }
         else
         {
             direction = CW;
-            rotate_cw();
+            rotateCw();
             angle += 10;
         }
     }
@@ -82,11 +82,11 @@ void one_two_phase_rotate_angle()
 /*
 화분 회전 기능(빛이 골고루 닿을 수 있도록 화분을 회전하는 기능)
 */
-void *rotate_pot(void *arg)
+void *rotatePot(void *arg)
 {
     // RTC 모듈에 의해 호출됨
     // wiringPiSetupGpio();
-    init_step();
+    initStep();
 
-    one_two_phase_rotate_angle();
+    oneTwoPhaseRotateAngle();
 }
