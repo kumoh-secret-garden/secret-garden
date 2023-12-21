@@ -1,15 +1,12 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include "controlLED.h"
-#include "remoteController.h"
-#include "getSoilMoisture.h"
-#include "controlWaterPump.h"
-#include "controlBluetooth.h"
-#include "schedulerRTC.h"
-#include "tempHumidSensor.h"
-#include "playMusic.h"
-#include "rotatePot.h"
-#include "controlVent.h"
+#include "common.h"
+
+#include "libs/photosynthesis.h"
+#include "libs/rtcModule.h"
+#include "libs/tempHumidSensor.h"
+#include "libs/ventilatePlant.h"
+#include "libs/waterPlant.h"
 
 #endif
